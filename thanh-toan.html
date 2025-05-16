@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán đơn hàng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem;
+            width: 100%;
+        }
+
+        .order-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .order-header h1 {
+            font-size: 2.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .order-header p {
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .copy-btn {
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .info-note {
+            color: #666;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            font-weight: 600;
+            position: relative;
+            transition: var(--transition);
+            color: #666;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transition: var(--transition);
+        }
+
+        .tab.active {
+            color: var(--primary-color);
+        }
+
+        .tab.active::after {
+            width: 100%;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Transfer Tab */
+        .transfer-info {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .info-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .info-table tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .info-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .info-table th,
+        .info-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .info-table th {
+            width: 30%;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .info-table td {
+            font-weight: 600;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .qr-code img {
+            max-width: 250px;
+            border: 1px solid #e0e0e0;
+            padding: 1rem;
+            border-radius: 10px;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 201, 240, 0.4);
+        }
+
+        .payment-btn {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 20px rgba(67, 97, 238, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.6);
+        }
+
+        .payment-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .payment-btn:hover::before {
+            left: 100%;
+        }
+
+        .warning-note {
+            text-align: center;
+            color: var(--warning-color);
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 158, 0, 0.1);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+
+        /* Order Detail Tab */
+        .order-detail {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Fireworks Animation */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            display: none;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px 5px rgba(255, 255, 255, 0.8);
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(30);
+                opacity: 0;
+            }
+        }
+
+        /* Success Modal */
+        .success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .success-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.8);
+            transition: var(--transition);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .success-modal.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-content i {
+            font-size: 4rem;
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            animation: bounce 0.5s ease infinite alternate;
+        }
+
+        @keyframes bounce {
+            from {
+                transform: translateY(0);
+            }
+
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        .modal-content h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .modal-content p {
+            margin-bottom: 2rem;
+            color: #666;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #666;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--secondary-color);
+            transform: rotate(90deg);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-column h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+
+        .footer-column h4::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient-accent);
+            border-radius: 3px;
+        }
+
+        .footer-column ul {
+            list-style: none;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-column ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-column ul li a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-column .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .footer-column .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: var(--transition);
+        }
+
+        .footer-column .social-links a:hover {
+            background: var(--gradient-accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 1rem;
+            }
+
+            .main-content {
+                padding: 1rem;
+            }
+
+            .order-header h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-direction: column;
+                border-bottom: none;
+            }
+
+            .tab {
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .tab::after {
+                display: none;
+            }
+
+            .info-table th,
+            .info-table td {
+                display: block;
+                width: 100%;
+                padding: 0.5rem 0;
+            }
+
+            .info-table th {
+                padding-top: 1rem;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Đang xử lý thanh toán...</p>
+        </div>
+    </div>
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>DocBuy</span>
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i> Menu
+            </button>
+
+            <nav>
+                <ul>
+                    <li><a href="/index.html">Trang chủ</a></li>
+                    <li><a href="#">Tài liệu</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="sidebar-nav">
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Tài liệu</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="order-header">
+            <h1 id="orderTitle">Đơn hàng MTC52561747382675</h1>
+            <p>Cảm ơn bạn đã đặt hàng tại DocBuy</p>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="transfer">Đơn chuyển khoản</div>
+            <div class="tab" data-tab="detail">Chi tiết đơn hàng</div>
+        </div>
+
+        <!-- Transfer Tab -->
+        <div class="tab-content active" id="transferTab">
+            <div class="transfer-info">
+                <!-- Thêm cảnh báo -->
+                <div class="warning-note" style="margin-bottom: 1.5rem; text-align: left;">
+                    <i class="fas fa-exclamation-circle"></i> <strong>LƯU Ý QUAN TRỌNG:</strong> Vui lòng chuyển khoản
+                    <strong>đúng số tiền</strong> và <strong>chính xác nội dung</strong> bên dưới để hệ thống tự động
+                    xác nhận thanh toán.
+                </div>
+
+                <table class="info-table">
+                    <tr>
+                        <th>Họ & tên</th>
+                        <td>LE HUU DO</td>
+                    </tr>
+                    <tr>
+                        <th>Số tài khoản</th>
+                        <td>
+                            <span id="accountNumber">21710000373543</span>
+                            <button class="copy-btn" data-target="accountNumber">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Thanh toán</th>
+                        <td>BIDV</td>
+                    </tr>
+                    <tr>
+                        <th>Số tiền cần chuyển</th>
+                        <td>
+                            <span id="transferAmount">50,000đ</span>
+                            <button class="copy-btn" data-target="transferAmount">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Nội dung ghi chú</th>
+                        <td>
+                            <span id="transferNote">ChuyenTien_Sach_Giao_Khoa_Toan_12</span>
+                            <button class="copy-btn" data-target="transferNote">
+                                <i class="far fa-copy"></i> Copy
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="qr-code">
+                    <img id="qrCodeImage"
+                        src="https://img.vietqr.io/image/BIDV-21710000373543-compact2.jpg?amount=50000&addInfo=ChuyenTien_Sach_Giao_Khoa_Toan_12&accountName=Le%20Huu%20Do"
+                        alt="QR Code">
+                    <br>
+                    <a href="#" class="download-btn" id="downloadQR">
+                        <i class="fas fa-download"></i> Tải ảnh
+                    </a>
+                </div>
+            </div>
+
+            <button class="payment-btn" id="paymentBtn">
+                <i class="fas fa-check-circle"></i> Xác nhận thanh toán
+            </button>
+
+            <!-- Thêm dòng nhắc nhở -->
+            <div class="info-note" style="text-align: center; color: #666; margin-top: 1rem; font-size: 0.9rem;">
+                <i class="fas fa-info-circle"></i> Sau khi chuyển khoản thành công, vui lòng nhấn nút "Đã thanh toán"
+                bên trên
+            </div>
+
+            <div class="warning-note">
+                <i class="fas fa-exclamation-triangle"></i> Chuyển tiền xong và sau 5 phút không thấy kết quả, hãy liên
+                hệ ngay admin.
+            </div>
+        </div>
+
+        <!-- Order Detail Tab -->
+        <div class="tab-content" id="detailTab">
+            <div class="order-detail">
+                <table class="info-table">
+                    <tr>
+                        <th>Mã đơn hàng</th>
+                        <td id="orderCode">MTC52561747382675</td>
+                    </tr>
+                    <tr>
+                        <th>Người nhận</th>
+                        <td id="orderEmail">xyz@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <th>Loại tài liệu</th>
+                        <td id="orderDocType">Sách giáo khoa</td>
+                    </tr>
+                    <tr>
+                        <th>Nội dung</th>
+                        <td id="orderDocContent">Sách giáo khoa Toán 12</td>
+                    </tr>
+                    <tr>
+                        <th>Mệnh giá</th>
+                        <td id="orderPrice">50,000đ</td>
+                    </tr>
+                    <tr>
+                        <th>Số lượng</th>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <th>Phương thức</th>
+                        <td id="orderPaymentMethod">VietinBank</td>
+                    </tr>
+                    <tr>
+                        <th>Tổng tiền</th>
+                        <td id="orderTotal">50,000đ</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Fireworks Animation -->
+    <div class="fireworks-container" id="fireworksContainer"></div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <i class="fas fa-check-circle"></i>
+            <h2>Thanh toán thành công!</h2>
+            <p>Tài liệu của bạn sẽ được gửi đến email trong vòng 5 phút. Vui lòng kiểm tra hộp thư đến hoặc thư mục
+                spam.</p>
+            <p>Nếu không nhận được email, vui lòng liên hệ với chúng tôi qua số điện thoại hỗ trợ.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Về DocBuy</h4>
+                <p>DocBuy là nền tảng mua tài liệu trực tuyến uy tín, cung cấp hàng ngàn tài liệu chất lượng cao với giá
+                    cả hợp lý.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Trang chủ</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Tài liệu</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Hướng dẫn</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Liên hệ</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Đăng nhập</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Loại tài liệu</h4>
+                <ul>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Sách giáo khoa</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Luận văn</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Nghiên cứu</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Đề thi</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Ghi chú</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Thông tin liên hệ</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Đường ABC</li>
+                    <li><i class="fas fa-phone"></i> 0123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@docbuy.vn</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 DocBuy. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarClose = document.getElementById('sidebarClose');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+
+        sidebarClose.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+
+        // Hide header on scroll down
+        let lastScroll = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll <= 0) {
+                header.classList.remove('hide');
+                return;
+            }
+
+            if (currentScroll > lastScroll && !header.classList.contains('hide')) {
+                header.classList.add('hide');
+            } else if (currentScroll < lastScroll && header.classList.contains('hide')) {
+                header.classList.remove('hide');
+            }
+
+            lastScroll = currentScroll;
+        });
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-target');
+                const textToCopy = document.getElementById(targetId).textContent;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    // Show copied feedback
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Đã copy';
+
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Could not copy text: ', err);
+                });
+            });
+        });
+        // Generate random order ID
+        function generateOrderId() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const randomLetters = letters.charAt(Math.floor(Math.random() * letters.length)) +
+                letters.charAt(Math.floor(Math.random() * letters.length)) +
+                letters.charAt(Math.floor(Math.random() * letters.length));
+
+            const now = new Date();
+            const datePart = now.getFullYear().toString().slice(-2) +
+                (now.getMonth() + 1).toString().padStart(2, '0') +
+                now.getDate().toString().padStart(2, '0') +
+                now.getHours().toString().padStart(2, '0') +
+                now.getMinutes().toString().padStart(2, '0') +
+                now.getSeconds().toString().padStart(2, '0') +
+                now.getMilliseconds().toString().padStart(3, '0');
+
+            const randomNum = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+
+            return randomLetters + datePart + randomNum;
+        }
+
+        // Get order details from URL or localStorage
+        // function getOrderDetails() {
+        //     // In a real app, you would get these from the previous page or server
+        //     // For demo, we'll use localStorage or default values
+        //     const orderId = generateOrderId();
+        //     const docType = localStorage.getItem('docType') || 'Sách giáo khoa';
+        //     const docContent = localStorage.getItem('docContent') || 'Sách giáo khoa Toán 12';
+        //     const docPrice = localStorage.getItem('docPrice') || '50000';
+        //     const paymentMethod = localStorage.getItem('paymentMethod') || 'VietinBank';
+        //     const email = localStorage.getItem('email') || 'xyz@gmail.com';
+
+        //     return {
+        //         orderId,
+        //         docType,
+        //         docContent,
+        //         docPrice,
+        //         paymentMethod,
+        //         email
+        //     };
+        // }
+
+        // Update page with order details
+        // function getUrlParameter(name) {
+        //     name = name.replace(/[\[\]]/g, '\\$&');
+        //     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        //         results = regex.exec(window.location.href);
+        //     if (!results) return null;
+        //     if (!results[2]) return '';
+        //     return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        // }
+
+        // Hàm lấy thông tin đơn hàng
+        function getOrderDetails() {
+            const orderId = getUrlParameter('order');
+            const encodedData = getUrlParameter('data');
+
+            if (!orderId || !encodedData) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const orderData = JSON.parse(atob(encodedData));
+                return {
+                    orderId,
+                    docType: orderData.docType,
+                    docContent: orderData.docContent,
+                    docPrice: orderData.price,
+                    paymentMethod: orderData.paymentMethod,
+                    email: orderData.email,
+                    total: orderData.total
+                };
+            } catch (e) {
+                console.error('Lỗi phân tích dữ liệu đơn hàng:', e);
+                window.location.href = 'index.html';
+                return;
+            }
+        }
+        // Cập nhật thông tin đơn hàng
+        function updateOrderDetails() {
+            const order = getOrderDetails();
+
+            if (!order) return;
+
+            // Cập nhật thông tin chung
+            document.getElementById('orderTitle').textContent = `Đơn hàng #${order.orderId}`;
+            document.getElementById('orderCode').textContent = order.orderId;
+
+            // Tab Đơn chuyển khoản
+            document.getElementById('transferAmount').textContent = formatCurrency(order.total);
+            const transferNote =    
+            document.getElementById('transferNote').textContent = transferNote;
+
+            // Cập nhật QR code
+            const qrCodeUrl = `https://img.vietqr.io/image/BIDV-21710000373543-compact2.jpg?amount=${order.total}&addInfo=${encodeURIComponent(transferNote)}&accountName=LE%20HUU%20DO`;
+            document.getElementById('qrCodeImage').src = qrCodeUrl;
+            document.getElementById('downloadQR').href = qrCodeUrl;
+            document.getElementById('downloadQR').setAttribute('download', `QR_${order.orderId}.jpg`);
+
+            // Tab Chi tiết đơn hàng
+            document.getElementById('orderEmail').textContent = order.email;
+            document.getElementById('orderDocType').textContent = order.docType;
+            document.getElementById('orderDocContent').textContent = order.docContent;
+            document.getElementById('orderPrice').textContent = formatCurrency(order.price);
+            document.getElementById('orderPaymentMethod').textContent = order.paymentMethod;
+            document.getElementById('orderTotal').textContent = formatCurrency(order.total);
+        }
+
+        // Gọi hàm khi trang tải xong
+        document.addEventListener('DOMContentLoaded', updateOrderDetails);
+
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                tabs.forEach(t => t.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+
+                // Add active class to clicked tab and corresponding content
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}Tab`).classList.add('active');
+            });
+        });
+
+        // Fireworks animation
+        function createFireworks() {
+            const container = document.getElementById('fireworksContainer');
+            container.innerHTML = '';
+            container.style.display = 'block';
+
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const firework = document.createElement('div');
+                    firework.className = 'firework';
+
+                    // Random position
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+
+                    // Random color
+                    const color = colors[Math.floor(Math.random() * colors.length)];
+
+                    firework.style.left = `${posX}%`;
+                    firework.style.top = `${posY}%`;
+                    firework.style.backgroundColor = color;
+                    firework.style.boxShadow = `0 0 10px 5px ${color}`;
+
+                    container.appendChild(firework);
+
+                    // Remove firework after animation
+                    setTimeout(() => {
+                        firework.remove();
+                    }, 1000);
+                }, i * 100);
+            }
+
+            // Hide container after all fireworks
+            setTimeout(() => {
+                container.style.display = 'none';
+            }, 6000);
+        }
+
+        // Payment button click
+        // document.getElementById('paymentBtn').addEventListener('click', () => {
+        //     // Show success modal
+        //     document.getElementById('successModal').classList.add('active');
+
+        //     // Create fireworks
+        //     createFireworks();
+        // });
+        document.getElementById('paymentBtn').addEventListener('click', async function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const transferNote = `ChuyenTien_${urlParams.get('orderId')}_${urlParams.get('docContent').replace(/\s+/g, '_')}`;
+            const orderData = {
+                orderId: urlParams.get('orderId'),
+                transferNote: transferNote,
+                customerEmail: urlParams.get('customerEmail'),
+                docType: urlParams.get('docType'),
+                docContent: urlParams.get('docContent'),
+                amount: urlParams.get('amount'),
+                paymentMethod: urlParams.get('paymentMethod'),
+                sheetName: "Đã thanh toán", // Sheet cho đơn đã thanh toán
+                status: "Đã thanh toán"
+            };
+            const loadingOverlay = document.getElementById('loadingOverlay');
+
+            try {
+                loadingOverlay.style.display = 'flex';
+
+                const response = await fetch('https://script.google.com/macros/s/AKfycbxHwZ0YERDx82U1AGJnlZ7NnxvfVrkjGy6ZqI-TsFKhDneZUbs2gJ6pW7Yd87fkspdgVQ/exec', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    mode: "no-cors",
+                    body: JSON.stringify(orderData)
+                });
+                loadingOverlay.style.display = 'none';
+
+                document.getElementById('successModal').classList.add('active');
+                createFireworks();
+                // Xử lý khi giao dịch trùng
+
+                // }
+            } catch (error) {
+                console.error('Error:', error);
+                loadingOverlay.style.display = 'none';
+                // alert('Có lỗi xảy ra khi xử lý thanh toán. Vui lòng thử lại.');
+
+
+            }
+        });
+        // Close modal
+        document.getElementById('modalClose').addEventListener('click', () => {
+            document.getElementById('successModal').classList.remove('active');
+            window.location.href = "hoa-don-thanh-toan.html"
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            updateOrderDetails();
+        });
+
+        // Hàm lấy tham số từ URL
+        function getUrlParameter(name) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Hàm lấy thông tin đơn hàng
+        function getOrderDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlOrderId = urlParams.get('orderId');
+            // const urlOrderId = getUrlParameter('order');
+
+            if (!urlOrderId) {
+                alert('Không tìm thấy thông tin đơn hàng');
+                window.location.href = 'index.html';
+                return null;
+            }
+
+            // Lấy dữ liệu từ localStorage
+            const savedOrder = localStorage.getItem('currentOrder');
+
+            if (!savedOrder) {
+                alert('Đơn hàng không tồn tại');
+                window.location.href = 'index.html';
+                return null;
+            }
+
+            try {
+                const orderData = JSON.parse(savedOrder);
+
+                // Kiểm tra orderId trong URL có khớp với orderId trong localStorage không
+                if (urlOrderId !== orderData.orderId) {
+                    alert('Mã đơn hàng không hợp lệ');
+                    // window.location.href = 'index.html';
+                    return null;
+                }
+
+                return orderData;
+            } catch (e) {
+                console.error('Lỗi phân tích dữ liệu đơn hàng:', e);
+                window.location.href = 'index.html';
+                return null;
+            }
+        }
+
+        // Hàm định dạng tiền
+        function formatCurrency(amount) {
+            return parseInt(amount).toLocaleString('vi-VN') + 'đ';
+        }
+
+
+
+        // Khởi tạo trang
+        document.addEventListener('DOMContentLoaded', function () {
+            updateOrderDetails();
+
+            // Xóa order đã xử lý khỏi localStorage
+        });
+
+
+    </script>
+
+</body>
+
+</html>

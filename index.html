@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Mua Tài Liệu Online Uy Tín</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Đang tạo đơn hàng...</p>
+        </div>
+    </div>
+    <!-- Header with Fixed Navigation -->
+    <header>
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-book-open"></i>
+                <span>DocBuy</span>
+            </a>
+
+            <button class="menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i> Menu
+            </button>
+
+            <nav>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Tài liệu</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <button class="sidebar-close" id="sidebarClose">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <div class="sidebar-nav">
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Tài liệu</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Banner Slider -->
+    <div class="banner">
+        <div class="slider">
+            <div class="slide active">
+                <div class="slide-content">
+                    <h1>Website mua tài liệu online uy tín</h1>
+                    <p>Hàng ngàn tài liệu chất lượng cao với giá cả hợp lý, thanh toán dễ dàng qua Momo và thẻ ngân hàng
+                    </p>
+                    <a href="#mua_ngay" class="btn">Mua ngay</a>
+                </div>
+            </div>
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Nguồn tài liệu đa dạng</h1>
+                    <p>Từ sách giáo khoa, luận văn đến tài liệu chuyên ngành, tất cả đều có tại DocBuy</p>
+                    <a href="#mua_ngay" class="btn btn-secondary">Khám phá ngay</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="section-title" id="mua_ngay">
+            <h2>Website mua tài liệu online uy tín qua momo và thẻ ngân hàng</h2>
+        </div>
+
+        <div class="two-columns">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Document Type Selection -->
+                <div class="form-group">
+                    <h3>Chọn loại tài liệu</h3>
+                    <div class="document-types">
+                        <div class="document-type" data-type="textbook">
+                            <i class="fas fa-book"></i>
+                            <h4>Sách giáo khoa</h4>
+                        </div>
+                        <div class="document-type" data-type="thesis">
+                            <i class="fas fa-file-alt"></i>
+                            <h4>Luận văn</h4>
+                        </div>
+                        <div class="document-type" data-type="research">
+                            <i class="fas fa-microscope"></i>
+                            <h4>Nghiên cứu</h4>
+                        </div>
+                        <div class="document-type" data-type="exam">
+                            <i class="fas fa-question-circle"></i>
+                            <h4>Đề thi</h4>
+                        </div>
+                        <div class="document-type" data-type="note">
+                            <i class="fas fa-sticky-note"></i>
+                            <h4>Ghi chú</h4>
+                        </div>
+                        <div class="document-type" data-type="other">
+                            <i class="fas fa-ellipsis-h"></i>
+                            <h4>Khác</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Options -->
+                <div class="form-group">
+                    <h3>Chọn nội dung tài liệu</h3>
+                    <div class="content-options" id="textbookOptions">
+                        <div class="content-option" data-price="50000">
+                            <span>Sách giáo khoa Toán 12</span>
+                            <span class="price">50,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="45000">
+                            <span>Sách giáo khoa Văn 12</span>
+                            <span class="price">45,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="55000">
+                            <span>Sách giáo khoa Anh 12</span>
+                            <span class="price">55,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="60000">
+                            <span>Sách giáo khoa Lý 12</span>
+                            <span class="price">60,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="40000">
+                            <span>Sách giáo khoa Sử 12</span>
+                            <span class="price">40,000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="content-options" id="thesisOptions">
+                        <div class="content-option" data-price="120000">
+                            <span>Luận văn Kinh tế</span>
+                            <span class="price">120,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="150000">
+                            <span>Luận văn CNTT</span>
+                            <span class="price">150,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="100000">
+                            <span>Luận văn Xã hội</span>
+                            <span class="price">100,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="180000">
+                            <span>Luận văn Y dược</span>
+                            <span class="price">180,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="90000">
+                            <span>Luận văn Ngoại ngữ</span>
+                            <span class="price">90,000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="content-options" id="researchOptions">
+                        <div class="content-option" data-price="200000">
+                            <span>Nghiên cứu khoa học</span>
+                            <span class="price">200,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="250000">
+                            <span>Báo cáo chuyên ngành</span>
+                            <span class="price">250,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="180000">
+                            <span>Tài liệu hội thảo</span>
+                            <span class="price">180,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="220000">
+                            <span>Bài báo khoa học</span>
+                            <span class="price">220,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="150000">
+                            <span>Đề tài NCKH</span>
+                            <span class="price">150,000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="content-options" id="examOptions">
+                        <div class="content-option" data-price="30000">
+                            <span>Đề thi Toán THPT</span>
+                            <span class="price">30,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="25000">
+                            <span>Đề thi Văn THPT</span>
+                            <span class="price">25,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="35000">
+                            <span>Đề thi Anh THPT</span>
+                            <span class="price">35,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="40000">
+                            <span>Đề thi Lý THPT</span>
+                            <span class="price">40,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="20000">
+                            <span>Đề thi Sử THPT</span>
+                            <span class="price">20,000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="content-options" id="noteOptions">
+                        <div class="content-option" data-price="15000">
+                            <span>Ghi chú bài giảng</span>
+                            <span class="price">15,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="20000">
+                            <span>Tóm tắt công thức</span>
+                            <span class="price">20,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="10000">
+                            <span>Mindmap tổng hợp</span>
+                            <span class="price">10,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="25000">
+                            <span>Slide bài giảng</span>
+                            <span class="price">25,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="18000">
+                            <span>Bài tập mẫu</span>
+                            <span class="price">18,000đ</span>
+                        </div>
+                    </div>
+
+                    <div class="content-options" id="otherOptions">
+                        <div class="content-option" data-price="50000">
+                            <span>Tài liệu tham khảo</span>
+                            <span class="price">50,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="75000">
+                            <span>Ebook chuyên ngành</span>
+                            <span class="price">75,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="60000">
+                            <span>Tài liệu dịch</span>
+                            <span class="price">60,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="40000">
+                            <span>Bài báo cáo</span>
+                            <span class="price">40,000đ</span>
+                        </div>
+                        <div class="content-option" data-price="35000">
+                            <span>Tài liệu tổng hợp</span>
+                            <span class="price">35,000đ</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Method -->
+                <div class="form-group">
+                    <h3>Phương thức thanh toán</h3>
+                    <div class="payment-methods">
+                        <div class="payment-method momo" data-method="momo">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Ví Momo</h4>
+                        </div>
+                        <div class="payment-method bank" data-method="bank">
+                            <i class="fas fa-credit-card"></i>
+                            <h4>Thẻ ngân hàng</h4>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Input -->
+                <div class="form-group email-input">
+                    <h3>Địa chỉ email</h3>
+                    <input type="email" id="email" placeholder="Nhập email của bạn">
+                    <div class="warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Đề nghị quý khách điền chính xác địa chỉ email để tránh nhầm lẫn và mất tài liệu.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <h3>Thanh toán</h3>
+                <div class="transaction-details">
+                    <h4>CHI TIẾT GIAO DỊCH</h4>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Loại tài liệu</span>
+                        <span class="detail-value" id="docTypeDisplay">Chưa chọn</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Loại nội dung:</span>
+                        <span class="detail-value" id="contentTypeDisplay">Chưa chọn</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Giá tiền cho nội dung</span>
+                        <span class="detail-value" id="priceDisplay">0đ</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Số lượng</span>
+                        <span class="detail-value">1</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Email nhận</span>
+                        <span class="detail-value" id="emailDisplay">Chưa có</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Phí giao dịch</span>
+                        <span class="detail-value">Miễn phí</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Giảm giá</span>
+                        <span class="detail-value">0đ</span>
+                    </div>
+
+                    <div class="detail-row">
+                        <span class="detail-label">Phương thức</span>
+                        <span class="detail-value" id="paymentMethodDisplay">Chưa chọn</span>
+                    </div>
+
+                    <div class="detail-row total-row">
+                        <span class="total-label">Tổng tiền</span>
+                        <span class="total-value" id="totalPriceDisplay">0đ</span>
+                    </div>
+                </div>
+
+                <button class="checkout-btn" id="checkoutBtn" disabled>Thanh toán ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Về DocBuy</h4>
+                <p>DocBuy là nền tảng mua tài liệu trực tuyến uy tín, cung cấp hàng ngàn tài liệu chất lượng cao với giá
+                    cả hợp lý.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h4>Liên kết nhanh</h4>
+                <ul>
+                    <li><a href="#">Trang chủ</a></li>
+                    <li><a href="#">Tài liệu</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Loại tài liệu</h4>
+                <ul>
+                    <li><a href="#">Sách giáo khoa</a></li>
+                    <li><a href="#">Luận văn</a></li>
+                    <li><a href="#">Nghiên cứu</a></li>
+                    <li><a href="#">Đề thi</a></li>
+                    <li><a href="#">Ghi chú</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4>Thông tin liên hệ</h4>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Đường ABC</li>
+                    <li><i class="fas fa-phone"></i> 0123 456 789</li>
+                    <li><i class="fas fa-envelope"></i> info@docbuy.vn</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 DocBuy. Tất cả quyền được bảo lưu.</p>
+        </div>
+    </footer>
+
+    <script src="./js/main.js"></script>
+</body>
+
+</html>
