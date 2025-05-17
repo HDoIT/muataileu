@@ -883,7 +883,7 @@
 
             // Tab Đơn chuyển khoản
             document.getElementById('transferAmount').textContent = formatCurrency(order.total);
-            const transferNote = `ChuyenTien_${urlParams.get('orderId')}_${urlParams.get('docContent').replace(/\s+/g, '_')}`;
+            const transferNote = `ChuyenTien_${order.orderId}_${order.docContent.replace(/\s+/g, '_')}`;
             document.getElementById('transferNote').textContent = transferNote;
 
             // Cập nhật QR code
